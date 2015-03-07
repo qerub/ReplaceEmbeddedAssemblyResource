@@ -4,9 +4,12 @@ A small program to replace embedded resources inside .NET assemblies.
 
 ## Usage
 
-`ReplaceEmbeddedAssemblyResource.exe <Assembly-Path> <New-Assembly-Path> <Resource-Name> <Resource-Path>`
+`ReplaceEmbeddedAssemblyResource.exe <Assembly-Path> <New-Assembly-Path> <Resource-Name> <Resource-Path> [-snk <Strong-Name-Key-Path>]`
 
-Example arguments: `Assembly.dll NewAssembly.dll Acme.Project.data.bin data.bin`
+Example arguments: 
+
+    Assembly.dll NewAssembly.dll Acme.Project.data.bin data.bin
+    SignedAssembly.dll NewAssembly.dll Acme.Project.data.bin data.bin -snk KeyFile.snk
 
 ## License
 
