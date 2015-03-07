@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace ReplaceEmbeddedAssemblyResource
 {
@@ -9,9 +10,16 @@ namespace ReplaceEmbeddedAssemblyResource
     {
         static void Main(string[] args)
         {
-            if (args.Length != 4)
+            // TODO: Smarter handling of command line parameters if there ever are additional ones
+            if (args.Length < 4 || args.Length == 5 || args.Length > 6)
             {
-                Console.Error.WriteLine("Expected arguments: <Assembly-Path> <New-Assembly-Path> <Resource-Name> <Resource-Path>");
+                Console.Error.WriteLine("Expected arguments: <Assembly-Path> <New-Assembly-Path> <Resource-Name> <Resource-Path> [-snk <Strong-Name-Key-Path>]");
+                Environment.Exit(1);
+            }
+            else if (args.Length == 6 && args[4] != "-snk")
+            {
+                Console.Error.WriteLine("Available options are:");
+                Console.Error.WriteLine("\t-snk: Path to strong name key file (.snk).");
                 Environment.Exit(1);
             }
 
@@ -19,6 +27,7 @@ namespace ReplaceEmbeddedAssemblyResource
             var newAssemblyPath = args[1];
             var resourceName    = args[2];
             var resourcePath    = args[3];
+            var snkPath         = args.Length == 6 ? args[5] : null;
 
             var assemblyDef = AssemblyDefinition.ReadAssembly(assemblyPath);
 
@@ -35,7 +44,13 @@ namespace ReplaceEmbeddedAssemblyResource
                 var newResource = new EmbeddedResource(resourceName, selectedResource.Attributes, File.ReadAllBytes(resourcePath));
                 resources.Remove(selectedResource);
                 resources.Add(newResource);
-                assemblyDef.Write(newAssemblyPath);
+                if (snkPath == null)
+                    assemblyDef.Write(newAssemblyPath);
+                else
+                {
+                    Console.WriteLine("Using strong name key file " + snkPath);
+                    assemblyDef.Write(newAssemblyPath, new WriterParameters() { StrongNameKeyPair = new StrongNameKeyPair(File.ReadAllBytes(snkPath)) });
+                }
 
                 Console.WriteLine("Replaced embedded resource " + resourceName + " successfully!");
             }
