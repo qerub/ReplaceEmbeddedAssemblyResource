@@ -13,7 +13,8 @@ Example arguments:
 
 ## License
 
-Copyright (c) 2013, Digifort Sverige AB  
+Copyright (c) 2013, [Digifort Sverige AB](http://www.digifort.se/en/)  
+Copyright (c) 2015, [dee-see](https://github.com/dee-see/)  
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
