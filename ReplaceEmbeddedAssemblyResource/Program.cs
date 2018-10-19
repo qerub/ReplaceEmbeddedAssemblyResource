@@ -41,15 +41,21 @@ namespace ReplaceEmbeddedAssemblyResource
 
             if (selectedResource != null)
             {
-                var newResource = new EmbeddedResource(resourceName, selectedResource.Attributes, File.ReadAllBytes(resourcePath));
-                resources.Remove(selectedResource);
-                resources.Add(newResource);
-                if (snkPath == null)
-                    assemblyDef.Write(newAssemblyPath);
-                else
+                using (var filestream = File.OpenRead(resourcePath))
                 {
-                    Console.WriteLine("Using strong name key file " + snkPath);
-                    assemblyDef.Write(newAssemblyPath, new WriterParameters() { StrongNameKeyPair = new StrongNameKeyPair(File.ReadAllBytes(snkPath)) });
+                    var newResource = new EmbeddedResource(resourceName, selectedResource.Attributes, filestream);
+                    resources.Remove(selectedResource);
+                    resources.Add(newResource);
+
+                    if (snkPath == null)
+                    {
+                        assemblyDef.Write(newAssemblyPath);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Using strong name key file " + snkPath);
+                        assemblyDef.Write(newAssemblyPath, new WriterParameters() { StrongNameKeyPair = new StrongNameKeyPair(File.ReadAllBytes(snkPath)) });
+                    }
                 }
 
                 Console.WriteLine("Replaced embedded resource " + resourceName + " successfully!");
