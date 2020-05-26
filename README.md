@@ -19,6 +19,7 @@ Example arguments:
 
 Copyright (c) 2013, Digifort Sverige AB  
 Copyright (c) 2015, [dee-see](https://github.com/dee-see/)  
+Copyright (c) 2018, [Tim Riemann](https://github.com/Octoate/)  
 Copyright (c) 2020, Christoffer Sawicki  
 All rights reserved.
 
