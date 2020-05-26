@@ -1,10 +1,14 @@
 # ReplaceEmbeddedAssemblyResource
 
-A small program to replace embedded resources inside .NET assemblies.
+A small .NET Core program to replace embedded resources inside .NET assemblies.
 
-## Usage
+## How to build
 
-`ReplaceEmbeddedAssemblyResource.exe <Assembly-Path> <New-Assembly-Path> <Resource-Name> <Resource-Path> [-snk <Strong-Name-Key-Path>]`
+    dotnet build
+
+## How to use
+
+    dotnet bin/Debug/netcoreapp3.1/ReplaceEmbeddedAssemblyResource.dll <Assembly-Path> <New-Assembly-Path> <Resource-Name> <Resource-Path> [-snk <Strong-Name-Key-Path>]
 
 Example arguments: 
 
@@ -13,8 +17,9 @@ Example arguments:
 
 ## License
 
-Copyright (c) 2013, [Digifort Sverige AB](http://www.digifort.se/en/)  
+Copyright (c) 2013, Digifort Sverige AB  
 Copyright (c) 2015, [dee-see](https://github.com/dee-see/)  
+Copyright (c) 2020, Christoffer Sawicki  
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
